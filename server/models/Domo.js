@@ -3,7 +3,7 @@ const _ = require('underscore');
 
 const setName = (name) => _.escape(name).trim();
 
-let setFace = (face) => _.escape(face).trim();
+const setFace = (face) => _.escape(face).trim();
 
 const DomoSchema = new mongoose.Schema({
   name: {
