@@ -3,6 +3,8 @@ const _ = require('underscore');
 
 const setName = (name) => _.escape(name).trim();
 
+let setFace = (face) => _.escape(face).trim();
+
 const DomoSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,6 +16,11 @@ const DomoSchema = new mongoose.Schema({
     type: Number,
     min: 0,
     required: true,
+  },
+  face: {
+    type: String,
+    required: true,
+    set: setFace,
   },
   owner: {
     type: mongoose.Schema.ObjectId,
@@ -29,6 +36,7 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.static.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
+  face: doc.face,
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);

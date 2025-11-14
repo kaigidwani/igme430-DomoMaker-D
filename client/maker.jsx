@@ -9,13 +9,25 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
+    const faceBool = e.target.querySelector('#domoFace').checked;
 
     if(!name || !age) {
         helper.handleError('All fields are required');
         return false;
     }
 
-    helper.sendPost(e.target.action, {name, age}, onDomoAdded);
+
+    // Set the face to either the cute face or the regular face
+    
+    let face;
+    // If true, cute was selected
+    if (faceBool) {
+        face = './assets/img/face.png';
+    } else { // Otherwise set to default face
+        face = '/assets/img/domoface.jpeg';
+    }
+
+    helper.sendPost(e.target.action, {name, age, face}, onDomoAdded);
     return false;
 }
 
@@ -32,6 +44,8 @@ const DomoForm = (props) => {
             <input id="domoName" type="text" name="name" placeholder="Domo Name" />
             <label htmlFor="age">Age: </label>
             <input id="domoAge" type="number" min="0" name="age" />
+            <label htmlFor="face">Cute: </label>
+            <input id="domoFace" type="checkbox" name="face" />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     );
@@ -60,7 +74,7 @@ const DomoList = (props) => {
     const domoNodes = domos.map(domo => {
         return (
             <div key={domo.id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                <img src={domo.face} alt="domo face" className="domoFace" />
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
             </div>
