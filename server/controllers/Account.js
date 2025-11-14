@@ -77,11 +77,9 @@ const changePass = async (req, res) => {
 
     try {
       const hash = await Account.generateHash(pass);
-      // account.password = hash;
       const newAccount = account;
       newAccount.password = hash;
       await newAccount.save();
-      // await account.updateUser(account.username, hash);
       req.session.account = Account.toAPI(account);
       return res.json({ redirect: '/login' });
     } catch (e) {
